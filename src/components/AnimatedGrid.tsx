@@ -56,7 +56,7 @@ export default function AnimatedGrid({ campaigns }: { campaigns: any[] }) {
                       height={1000}
                       placeholder={blurHash ? "blur" : "empty"}
                       blurDataURL={blurHash || undefined}
-                      className="w-full h-auto object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.03]"
+                      className="w-full h-auto object-cover"
                     />
                   )}
                 </div>
