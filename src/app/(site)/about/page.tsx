@@ -39,17 +39,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Selected Clients / Exhibition List */}
-        <div className="pt-8 border-t border-gray-100">
-          <h3 className="text-[10px] tracking-[0.2em] uppercase font-semibold text-black mb-6">
-            Selected Works & Publications
-          </h3>
-          <ul className="text-xs text-gray-500 space-y-3 uppercase tracking-widest">
-            <li>Editorial — Campaign 01</li>
-            <li>Commercial — Studio Sessions</li>
-            <li>Print — Volume IV</li>
-          </ul>
-        </div>
+       
 
         {/* Seamless routing to the Contact page */}
         <div className="pt-4">
