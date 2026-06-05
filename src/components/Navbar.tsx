@@ -26,9 +26,9 @@ export default function Navbar() {
       <div className="flex justify-between items-center px-6 py-8 md:px-12 md:py-12 bg-white">
         
         {/* The Logo */}
-        <Link href="/" className="text-2xl tracking-[0.2em] uppercase font-medium leading-snug text-black z-50 relative">
-          BHARAT<br />SETHI
-        </Link>
+        <Link href="/" className="text-xl tracking-widest uppercase whitespace-nowrap text-black font-medium">
+  BHARAT SETHI
+</Link>
 
         {/* Desktop Menu (Hidden on Mobile) */}
         <nav className="hidden md:flex items-center gap-8 text-xs tracking-[0.2em] uppercase font-semibold text-gray-500">

@@ -8,6 +8,7 @@ import { urlFor } from "@/sanity/lib/image";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AnimatedGrid({ photos }: { photos: any[] }) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     if (currentIndex !== null) document.body.style.overflow = "hidden";
@@ -15,23 +16,25 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
     return () => { document.body.style.overflow = "unset"; };
   }, [currentIndex]);
 
-  const openLightbox = (index: number) => setCurrentIndex(index);
-  const closeLightbox = () => setCurrentIndex(null);
+  // THE FIX: One function to handle everything. No more useEffect errors.
+  const handleIndexChange = (index: number | null) => {
+    setImageLoaded(false); // Reset loading instantly
+    setCurrentIndex(index); // Update index
+  };
 
   const showNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (currentIndex !== null) setCurrentIndex((currentIndex + 1) % photos.length);
+    if (currentIndex !== null) handleIndexChange((currentIndex + 1) % photos.length);
   };
 
   const showPrev = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (currentIndex !== null) setCurrentIndex((currentIndex - 1 + photos.length) % photos.length);
+    if (currentIndex !== null) handleIndexChange((currentIndex - 1 + photos.length) % photos.length);
   };
 
   return (
     <>
-      {/* The Predictable, Stable Flexbox Grid */}
-      <div className="flex flex-col md:flex-row gap-4 md:gap-6 max-w-[1600px] mx-auto group">
+      <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-12 max-w-[1600px] mx-auto">
         
         {/* COLUMN 1 */}
         <div className="flex flex-col gap-4 md:gap-6 w-full md:w-1/3">
@@ -39,12 +42,8 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
             if (index % 3 !== 0 || !photo?.asset) return null; 
             const blurHash = photo.asset.metadata?.lqip;
             return (
-              <div 
-                key={photo._key || index} 
-                onClick={() => openLightbox(index)}
-                className="cursor-pointer transition-all duration-700 ease-out group-hover:opacity-30 hover:!opacity-100 relative"
-              >
-                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" />
+              <div key={photo._key || index} onClick={() => handleIndexChange(index)} className="cursor-pointer relative">
+                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" priority={index < 3} />
               </div>
             );
           })}
@@ -56,12 +55,8 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
             if (index % 3 !== 1 || !photo?.asset) return null; 
             const blurHash = photo.asset.metadata?.lqip;
             return (
-              <div 
-                key={photo._key || index} 
-                onClick={() => openLightbox(index)}
-                className="cursor-pointer transition-all duration-700 ease-out group-hover:opacity-30 hover:!opacity-100 relative"
-              >
-                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" />
+              <div key={photo._key || index} onClick={() => handleIndexChange(index)} className="cursor-pointer relative">
+                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" priority={index < 3} />
               </div>
             );
           })}
@@ -73,12 +68,8 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
             if (index % 3 !== 2 || !photo?.asset) return null; 
             const blurHash = photo.asset.metadata?.lqip;
             return (
-              <div 
-                key={photo._key || index} 
-                onClick={() => openLightbox(index)}
-                className="cursor-pointer transition-all duration-700 ease-out group-hover:opacity-30 hover:!opacity-100 relative"
-              >
-                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" />
+              <div key={photo._key || index} onClick={() => handleIndexChange(index)} className="cursor-pointer relative">
+                <Image src={urlFor(photo).width(800).url()} alt={photo.alt || "Bharat Sethi Photography"} width={800} height={1000} placeholder={blurHash ? "blur" : "empty"} blurDataURL={blurHash || undefined} className="w-full h-auto object-cover" priority={index < 3} />
               </div>
             );
           })}
@@ -86,19 +77,18 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
 
       </div>
 
-      {/* The Lightbox */}
       <AnimatePresence>
         {currentIndex !== null && photos[currentIndex]?.asset && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.05 }}
             className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center"
-            onClick={closeLightbox}
+            onClick={() => handleIndexChange(null)}
           >
             <div className="absolute top-0 w-full flex justify-end p-8 z-50">
-              <button onClick={closeLightbox} className="text-gray-400 hover:text-black transition-colors">
+              <button onClick={() => handleIndexChange(null)} className="text-gray-400 hover:text-black transition-colors">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -110,21 +100,31 @@ export default function AnimatedGrid({ photos }: { photos: any[] }) {
                <div className="absolute left-0 top-0 w-1/2 h-full cursor-[w-resize] z-10" onClick={showPrev} />
                <div className="absolute right-0 top-0 w-1/2 h-full cursor-[e-resize] z-10" onClick={showNext} />
 
+              {!imageLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center z-0">
+                  <span className="text-sm font-light tracking-[0.5em] text-gray-600 uppercase animate-pulse">
+                    Loading
+                  </span>
+                </div>
+              )}
+
               <motion.div
                 key={currentIndex}
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.1 }}
                 className="relative w-full h-full"
               >
                 <Image
-                  src={urlFor(photos[currentIndex]).url()}
+                  src={urlFor(photos[currentIndex]).width(1920).quality(80).url()}
                   alt={`Viewing image ${currentIndex + 1}`}
                   fill
-                  className="object-contain pointer-events-none"
                   priority
-                  placeholder={photos[currentIndex].asset?.metadata?.lqip ? "blur" : "empty"}
-                  blurDataURL={photos[currentIndex].asset?.metadata?.lqip || undefined}
+                  unoptimized
+                  onLoad={() => setImageLoaded(true)}
+                  className={`object-contain pointer-events-none transition-opacity duration-300 ease-out ${
+                    imageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
                 />
               </motion.div>
             </div>

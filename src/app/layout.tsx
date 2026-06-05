@@ -1,26 +1,54 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; // 🚨 THIS RESTORES YOUR TAILWIND STYLING!
 
-// 1. Configure the premium font
+// Configure the premium font
 const inter = Inter({ 
   subsets: ["latin"],
   display: "swap",
 });
 
+// The Ultimate SEO Payload
 export const metadata: Metadata = {
-  title: "Bharat Sethi — Photography & Artwork",
-  description: "Editorial, fashion, and commercial photography portfolio by Bharat Sethi.",
+  metadataBase: new URL("https://bharatsethi.co.uk"),
+  title: {
+    default: "Bharat Sethi | Photography & Artwork",
+    template: "%s | Bharat Sethi",
+  },
+  description: "Editorial, fashion, and commercial photography portfolio by Bharat Sethi. Capturing moments and creating memories.",
+  keywords: [
+    "Bharat Sethi",
+    "Photography Portfolio",
+    "Fashion Photographer",
+    "Editorial Photography",
+    "Commercial Photographer",
+    "Portrait Photography", 
+  ],
+  authors: [{ name: "Bharat Sethi" }],
+  creator: "Bharat Sethi",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "Bharat Sethi — Photography & Artwork",
+    title: "Bharat Sethi | Photography & Artwork",
     description: "Editorial, fashion, and commercial photography portfolio.",
-    url: "https://bharatsethi.com", // You'll update this once the custom domain is connected
-    siteName: "Bharat Sethi Portfolio",
+    url: "/",
+    siteName: "Bharat Sethi",
     type: "website",
     images: [
       {
-        // We can replace this with a direct URL of one of his best photos later
-        url: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1200&h=630&auto=format&fit=crop", 
+        url: "/about_photo.jpeg", 
         width: 1200,
         height: 630,
         alt: "Bharat Sethi Photography Portfolio",
@@ -29,11 +57,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bharat Sethi — Photography & Artwork",
+    title: "Bharat Sethi | Photography & Artwork",
     description: "Editorial, fashion, and commercial photography portfolio.",
   },
 };
 
+// 🚨 THIS WRAPS THE WHOLE SITE IN YOUR FONT AND STYLES
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,7 +70,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* 3. Apply the font globally, add anti-aliasing for sharpness, and custom selection colors */}
       <body className={`${inter.className} antialiased bg-white text-black selection:bg-black selection:text-white`}>
         {children}
       </body>

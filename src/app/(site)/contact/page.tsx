@@ -26,16 +26,16 @@ export default function ContactPage() {
         >
           <p className="text-xs uppercase tracking-widest text-gray-400">Direct Inquiries</p>
           <motion.a 
-            href="mailto:studio@bharatsethi.com" 
+            href="mailto:sethibharat04@gmail.com" 
             whileHover={{ scale: 1.05, color: "#6b7280" }}
             transition={{ type: "spring", stiffness: 300 }}
             className="inline-block text-xl tracking-[0.1em] border-b border-transparent hover:border-gray-400 pb-1"
           >
-            studio@bharatsethi.com
+            sethibharat04@gmail.com
           </motion.a>
         </motion.div>
 
-        {/* Animated Social Section with Brand Colors */}
+        {/* Animated Social Section with Brand Color  s */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function ContactPage() {
             
             {/* Instagram - Pops to brand pink/magenta */}
             <motion.a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/bharatsethi07/" 
               target="_blank" 
               initial={{ color: "#000000" }}
               whileHover={{ y: -3, color: "#E1306C" }}
@@ -57,16 +57,16 @@ export default function ContactPage() {
               Instagram
             </motion.a>
 
-            {/* Behance - Pops to brand blue */}
+            {/* LinkedIn - Pops to brand blue */}
             <motion.a 
-              href="https://behance.net" 
+              href="https://www.linkedin.com/in/bharat-sethi-658427330" 
               target="_blank" 
               initial={{ color: "#000000" }}
               whileHover={{ y: -3, color: "#1769ff" }}
               transition={{ duration: 0.2 }}
               className="text-sm tracking-widest uppercase block"
             >
-              Behance
+              LinkedIn
             </motion.a>
 
           </div>

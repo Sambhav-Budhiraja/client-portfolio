@@ -9,7 +9,7 @@ export default function AboutPage() {
       <div className="w-full md:w-1/2 relative aspect-[3/4] bg-gray-50 overflow-hidden">
         {/* Replace the src with his actual portrait URL from Sanity or your public folder */}
         <Image 
-          src="https://images.unsplash.com/photo-1554046920-90dc20696342?q=80&w=800&auto=format&fit=crop" 
+          src="/about_photo.jpeg" 
           alt="Bharat Sethi Portrait" 
           fill
           className="object-cover grayscale hover:grayscale-0 transition-all duration-[1.5s] ease-out"
@@ -32,11 +32,14 @@ export default function AboutPage() {
         {/* Bio */}
         <div className="space-y-6 text-sm text-gray-600 leading-relaxed max-w-md font-light">
           <p>
-            Specializing in high-end editorial, fashion, and commercial photography. Based in India, working globally.
+Bharat Sethi is a photographer and creative director currently based in London, United Kingdom.
+
+Born and raised in Haryana, India, his work reflects a fascination with emotion, fashion, and the meanings hidden within everyday moments. For Bharat, photography is more than a medium of documentation; it is a way of preserving feelings that words often struggle to express. Influenced by art, cinema, music, and culture, he approaches every image as an opportunity to capture not only what is seen, but also what is felt.
           </p>
           <p>
-            The approach is rooted in stark minimalism and raw emotion—stripping away the unnecessary to reveal the core narrative of every subject and brand.
-          </p>
+Believing that art has no fixed shape, Bharat views photography as a third eye—one that allows him to notice moments, details, and emotions that might otherwise pass unnoticed. Through his work, he explores the relationship between people, identity, and self-expression, creating images that invite viewers to discover their own meaning within the frame.
+
+His creative practice is driven by the belief that every photograph carries a soul of its own, transforming fleeting moments into lasting visual experiences.          </p>
         </div>
 
        
